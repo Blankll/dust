@@ -1,7 +1,5 @@
-package com.seven.ynnuzc.dust;
+package com.seven.ynnuzce.dust;
 
-
-import org.junit.Test;
 
 /**
  * Unit test for simple App.
