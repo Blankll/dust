@@ -9,8 +9,8 @@ package com.seven.dust.boot;
 public class BootStrap {
     public void run(Class<?> application) throws Exception {
         // load config
-        EnvInitlization initlization = new EnvInitlization();
-        initlization.init();
+        EnvInitlization initEnv = new EnvInitlization(application);
+        initEnv.init();
         // start jetty server
         Server.start(application);
     }

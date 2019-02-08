@@ -14,6 +14,10 @@ import java.util.Properties;
  * @Version: 1.0
  */
 public class EnvInitlization {
+    private Class<?> application;
+    public EnvInitlization(Class<?> application) {
+        this.application = application;
+    }
     private Config config = Config.getInstance();
     public void init() throws IOException  {
         this.loadAppProperties();
@@ -27,10 +31,10 @@ public class EnvInitlization {
     private void loadAppProperties () throws IOException {
         Properties properties = new Properties();
 
-        String configPath = this.getClass().getClassLoader().getResource("app.properties").getPath();
+        String appConfigPath = application.getClassLoader().getResource("app.properties").getPath();
         config.set("root", System.getProperty("user.dir"));
-        config.set("app.properties", configPath);
-        InputStream appStream = new FileInputStream(configPath);
+        config.set("app.properties", appConfigPath);
+        InputStream appStream = new FileInputStream(appConfigPath);
         properties.load(appStream);
         properties.forEach((key, value) -> {
             config.set(key.toString(), value.toString());
