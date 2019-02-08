@@ -1,6 +1,7 @@
 package com.seven.dust.responses;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -20,7 +21,10 @@ public class Response<T> {
     public  <T>void sendData(int status, RestRep<T> data) throws IOException {
         this.resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
-        out.write((new Gson().toJson(data)));
+        GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.excludeFieldsWithoutExposeAnnotation();
+        Gson gson = gsonBuilder.create();
+        out.write((gson.toJson(data)));
         out.close();
     }
 }

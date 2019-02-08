@@ -59,14 +59,14 @@ public class Dispatch extends HttpServlet {
         try {
             Object obj = router.getController().getConstructor().newInstance();
             init.invoke(obj, req, resp);
-            Class ctype = action.getReturnType();
+            Class crtype = action.getReturnType();
             RestRep restRep;
 
             Object result = action.invoke(obj);
-            if(ctype.equals(RestRep.class) || ctype.isInstance(RestRep.class)) {
+            if(crtype.equals(RestRep.class) || crtype.isInstance(RestRep.class)) {
                 restRep = (RestRep)result;
             } else {
-                restRep = new RestRep(200, "操作成功", result);
+                restRep = new RestRep(2000, "操作成功", result);
             }
             Response response = new Response(resp);
             response.sendData(200, restRep);
