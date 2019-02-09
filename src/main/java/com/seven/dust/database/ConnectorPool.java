@@ -27,6 +27,7 @@ public class ConnectorPool implements DataSource {
     private ConnectorPool() {
         // load driver
         try {
+            String driver = Config.get("db.driver");
             Class.forName(Config.get("db.driver"));
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
