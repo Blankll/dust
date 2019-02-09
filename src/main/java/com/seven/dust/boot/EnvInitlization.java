@@ -3,6 +3,7 @@ package com.seven.dust.boot;
 import com.seven.dust.config.Config;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
@@ -18,7 +19,7 @@ public class EnvInitlization {
     public EnvInitlization(Class<?> application) {
         this.application = application;
     }
-    private Config config = Config.getInstance();
+    private Config config = new Config();
     public void init() throws IOException  {
         this.loadAppProperties();
         this.loadDbProperties();
@@ -32,6 +33,7 @@ public class EnvInitlization {
         Properties properties = new Properties();
 
         String appConfigPath = application.getClassLoader().getResource("app.properties").getPath();
+        System.out.println("[INFO] app.properties path:" + appConfigPath);
         config.set("root", System.getProperty("user.dir"));
         config.set("app.properties", appConfigPath);
         InputStream appStream = new FileInputStream(appConfigPath);
@@ -46,6 +48,8 @@ public class EnvInitlization {
      * @throws IOException
      */
     private void loadDbProperties () throws IOException {
+        Config config = new Config();
+
         Properties properties = new Properties();
         String dbConfigPath = this.getClass().getClassLoader().getResource("db.properties").getPath();
         InputStream dbStream = new FileInputStream(dbConfigPath);
@@ -53,5 +57,6 @@ public class EnvInitlization {
         properties.forEach((key, value) -> {
             config.set("db." + key.toString(), value.toString());
         });
+
     }
 }
